@@ -1,0 +1,62 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+<canvas id="canvas" width="1500" height="900"></canvas>
+<script>
+$(document).ready(function(){
+	//Canvas stuff
+	var canvas = $("#canvas")[0];
+	var ctx = canvas.getContext("2d");
+	var w = $("#canvas").width();
+	var h = $("#canvas").height();
+	
+	//Lets save the cell width in a variable for easy control
+	var cw = 10;
+	var d;
+
+	var Firebase = require("firebase");
+	var firebase = new Firebase("https://multiplayer-pacman.firebaseio.com/");
+
+	var game = firebase.child("games");
+	var newGame = game.push();
+	var gameID = newGame.key();
+	newGame.set({
+		author: "gracehop",
+
+	})
+
+
+	function clearBoard(){
+		ctx.fillStyle = "black";
+		ctx.fillRect(0, 0, w, h);
+		ctx.strokeStyle = "red";
+		ctx.strokeRect(0, 0, w, h);
+	}
+
+	function createPac(x,y){
+		var cat = new Image();
+	  	cat.src = "images/pacman.png";
+	  	cat.onload = function() {
+	    	ctx.drawImage(cat, x, y, 50, 50);
+	  	};
+	}
+
+	createPac(500,500);
+
+	function loop(){
+		clearBoard();
+
+	}
+	game_loop = setInterval(loop, 60);
+	
+	
+	
+	
+	
+	
+})
+</script>
+</body>
+</html>
